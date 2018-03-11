@@ -1,0 +1,53 @@
+#toc {
+    position: fixed;
+    top: 45px;
+    bottom: 0;
+    z-index: 1;
+    overflow-y: auto;
+    padding-top: 30px;
+    padding-left: 15px;
+    padding-bottom: 30px;
+    width: 300px;
+    color: #364149;
+    background: #fff;
+    border-right: 1px solid rgba(0,0,0,.07);
+    -webkit-transition: left 250ms ease;
+    -moz-transition: left 250ms ease;
+    -o-transition: left 250ms ease;
+    transition: left 250ms ease;
+}
+
+#toc a {
+    color: #364149;
+}
+
+#toc li ul {
+    margin-left: 20px;
+}
+
+#toc li.active > a {
+    color: #1aad16;
+}
+
+#toc li ul li:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 8px;
+    left: 0;
+    height: 8px;
+    width: 6px;
+    border-left: 1px solid #e7e7eb;
+    border-bottom: 1px solid #e7e7eb;
+}
+
+#toc li ul li:not(:last-child):after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 16px;
+    left: 0;
+    height: 31px;
+    width: 6px;
+    border-left: 1px solid #e7e7eb;
+}
