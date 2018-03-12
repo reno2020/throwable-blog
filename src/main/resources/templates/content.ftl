@@ -10,26 +10,17 @@
 
     <!-- Bootstrap -->
     <link href="/css/bootstrap.css" rel="stylesheet">
-    <link href="css/index.css" rel="stylesheet">
-    <link href="css/ztree.css" rel="stylesheet">
+    <link href="css/content.css" rel="stylesheet">
+    <link href="css/oschina.css" rel="stylesheet">
+
     <style>
-        /*.ztree {*/
-            /*position: fixed;*/
-            /*top: 50px;*/
-            /*bottom: 0;*/
-            /*overflow-y: auto;*/
-            /*padding-top: 30px;*/
-            /*padding-left: 15px;*/
-            /*padding-bottom: 30px;*/
-            /*width: 300px;*/
-            /*color: #364149;*/
-            /*background: #fff;*/
-            /*border-right: 1px solid rgba(0,0,0,.07);*/
-            /*-webkit-transition: left 250ms ease;*/
-            /*-moz-transition: left 250ms ease;*/
-            /*-o-transition: left 250ms ease;*/
-            /*transition: left 250ms ease;*/
-        /*}*/
+        .ztree {
+            overflow: auto;
+            height: 100%;
+            min-height: 200px;
+            top: 50px;
+            padding: 0;
+            margin: 0;
     </style>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="js/jquery.js"></script>
@@ -38,13 +29,10 @@
 
     <script src="js/common.js"></script>
 
-    <!--strapdownify-->
+    <!-- strapdownify -->
     <script src="js/strapdown.js"></script>
-
-    <script type="text/javascript" src="js/jquery.ztree.core-3.5.js"></script>
-    <script type="text/javascript" src="js/ztree_toc.js"></script>
-    <!--toc-->
-<#--<script src="js/toc.js"></script>-->
+    <!-- markdown_toc -->
+    <script src="js/markdown_toc.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -70,7 +58,7 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li ><a href="${base}/index">Home</a></li>
+                <li><a href="${base}/index">Home</a></li>
                 <li class="active"><a href="#">Spring</a></li>
                 <li><a href="#">Jdk</a></li>
             </ul>
@@ -81,11 +69,32 @@
 <div class="container-fluid">
 
     <div class="row row-offcanvas row-offcanvas-left">
-        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
+        <div class="col-xs-6 col-sm-2 sidebar-offcanvas" id="sidebar">
             <ul id="ztree" class="ztree"></ul>
         </div>
-        <div class="col-xs-12 col-sm-9" id="content" data-spy="scroll" data-target="#toc">
+        <div id="content" class="col-xs-12 col-sm-10">
+            <div id="content-title" class="content-title">测试博客内容</div>
+            <div id="content-description" class="content-description">
+                <!--创建时间-->
+                <span id="content-create-time" class="content-create-time">
+                    创建时间：2018-01-01
+                </span>
+                <!--更新时间-->
+                <span id="content-update-time" class="content-update-time">
+                    更新时间：2018-01-08
+                </span>
+                <!--浏览数-->
+                <span id="content-views" class="content-views">
+                    浏览次数：1000
+                </span>
+                <!--评论数-->
+                <span id="content-replies" class="content-replies">
+                    评论次数：1000
+                </span>
+            </div>
+            <div id="article-content" data-spy="scroll">
 
+            </div>
         </div>
     </div>
     <hr>
@@ -102,18 +111,23 @@
         type: 'GET',
         dataType: 'text',
         success: function (data) {
-            markdownFromText(data, "content");
+            markdownFromText(data, "article-content");
         }
     });
 
-    //生成Toc
     $(document).ready(function () {
-        $('#ztree').ztree_toc({
+        $('#ztree').markdown_toc({
             is_auto_number: false,
-            is_expand_all: true,
-            is_highlight_selected_line: false
+            _header_nodes: [],
+            render_after: function (opts, compiled_html) {
+                $(opts._zTree).html("\<div class='BlogAnchor'>\<p>\<em class='corner' id='AnchorContentToggle' title='展开' style='cursor:pointer;'>目录\</em>\</p>\<div class='AnchorContent' id='AnchorContent' style='display: block;'>" + compiled_html + "\</div>\</div>");
+            },
+            compile_headers_with_item: function (item) {
+                return "<li class='osc_h" + item.level + "'><a href='#" + item.id + "'>" + item.origin_title + "</a></li>"
+            }
         });
     });
+
 </script>
 
 <!--toc-->

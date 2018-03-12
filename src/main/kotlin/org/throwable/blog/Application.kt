@@ -1,4 +1,4 @@
-package org.throwable
+package org.throwable.blog
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

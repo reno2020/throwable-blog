@@ -60,36 +60,39 @@ function factor(opts ,count,current) {
 	function create_toc(opts) {
 		$(opts.documment_selector).find(':header').each(function() {
 			var level = parseInt(this.nodeName.substring(1), 10);
-
+			var origin_title = $.trim($(this).text());
+			
 			_rename_header_content(opts,this,level);
-
-			_add_header_node(opts,$(this));
+			
+			_add_header_node(opts,$(this),level,origin_title);
 		});//end each
 	}
 
 	/*
-	 * 渲染ztree
+	 * 渲染header
 	 */
-	function render_with_ztree(opts) {
-		var t = $(opts._zTree);
-		t = $.fn.zTree.init(t,opts.ztreeSetting,opts._header_nodes).expandAll(opts.is_expand_all);
-		// alert(opts._headers * 88);
-		// $(opts._zTree).height(opts._headers  * 33 + 33);
-
-		if(opts.is_posion_top == true){
-			opts.ztreeStyle.top = '0px';
-
-			if( opts.ztreeStyle.hasOwnProperty('bottom') )
-				delete opts.ztreeStyle.bottom ;
-		}else{
-			opts.ztreeStyle.bottom = '0px';
-
-			if( opts.ztreeStyle.hasOwnProperty('top') )
-				delete opts.ztreeStyle.top;
-		}
-
-		$(opts._zTree).css(opts.ztreeStyle);
+	function render_with_headers(opts) {
+		opts.render_before(opts);
+	 	return compile_headers(opts);
 	}
+	
+	/*
+	 * 渲染header
+	 */
+	function compile_headers(opts) {
+		var result = opts._header_nodes;
+		var html = '';
+		
+		for(var i in result){
+			var item = result[i];
+			// compile with template
+			html += opts.compile_headers_with_item(item);
+		}
+		
+		opts.render_after(opts, html);
+	 	return html;
+	}
+
 
 	/*
 	 * 将已有header编号，并重命名
@@ -132,7 +135,7 @@ function factor(opts ,count,current) {
 	/*
 	 * 给ztree用的header_nodes增加数据
 	 */
-	function _add_header_node(opts ,header_obj) {
+	function _add_header_node(opts ,header_obj, level, origin_title) {
 		var id  = encode_id_with_array(opts,opts._headers);//for ztree
 		var pid = get_parent_id_with_array(opts,opts._headers);//for ztree
 		var anchor = id;//use_head_anchor.html#第二部分
@@ -152,12 +155,14 @@ function factor(opts ,count,current) {
 		log('h offset ='+( $(header_obj).offset().top - opts.highlight_offset ) );
 
 		opts._header_nodes.push({
-			id:id,
-			pId:pid ,
-			name:$(header_obj).text()||'null',
-			open:true,
-			url:'#'+ anchor,
-			target:'_self'
+			id					: id,
+			level				: level,
+			pId					: pid ,
+			orderd_title				: $(header_obj).text()||'null',
+			origin_title: origin_title,
+			open				: true,
+			url					: '#'+ anchor,
+			target			: '_self'
 		});
 	}
 
@@ -195,6 +200,15 @@ function factor(opts ,count,current) {
 	    highlight_on_scroll();
 	  }
 	}
+	/*
+	 * 初始化中间件
+	 */
+	function init_with_middlewares(opts){
+		var middlewares = opts.middlewares;
+		for(o in middlewares){
+			middlewares[o](opts);
+		}
+	}
 
 	/*
 	 * 初始化
@@ -207,41 +221,43 @@ function factor(opts ,count,current) {
 	 * 日志
 	 */
 	function log(str) {
-		return;
-		if($.fn.ztree_toc.defaults.debug == true) {
+		if($.fn.markdown_toc.defaults.debug == true) {
 			console.log(str);
 		}
 	}
 
-	$.fn.ztree_toc = function(options) {
+	$.fn.markdown_toc = function(options) {
 		// 将defaults 和 options 参数合并到{}
-		var opts = $.extend({},$.fn.ztree_toc.defaults,options);
+		var opts = $.extend({},$.fn.markdown_toc.defaults,options);
 
 		return this.each(function() {
 			opts._zTree = $(this);
 
 			// 初始化
 			init_with_config(opts);
+			
+			// 初始化middlewares
+			init_with_middlewares(opts);
 
 			// 创建table of content，获取元数据_headers
 			create_toc(opts);
 
 			// 根据_headers生成ztree
-			render_with_ztree(opts);
+			render_with_headers(opts);
 
 			// 根据滚动确定当前位置，并更新ztree
-		    bind_scroll_event_and_update_postion(opts);
+		    // bind_scroll_event_and_update_postion(opts);
 		});
 		// each end
 	}
 
 	//定义默认
-	$.fn.ztree_toc.defaults = {
+	$.fn.markdown_toc.defaults = {
 		_zTree: null,
 		_headers: [],
 		_header_offsets: [],
-		_header_nodes: [{ id:1, pId:0, name:"目录",open:true}],
-		debug: true,
+		_header_nodes: [{ id:1, pId:0, orderd_title:"目录",open:true}],
+		debug: false,
 		/*
 		 * 使用标题作为anchor
 		 * create table with head for anchor for example: <h2 id="#Linux基础">Linux基础</h2>
@@ -257,6 +273,33 @@ function factor(opts ,count,current) {
 		 */
 		refresh_scroll_time: 50,
 		documment_selector: 'body',
+		render_before:function(opts){
+			
+		},
+		render_after:function(opts,compiled_html){
+			$(opts._zTree).html("<ul>" + compiled_html  +"</ul>");
+		},
+		/*
+		 * 中间件
+		 */
+		middlewares:[
+			function(opts){
+				console.log('aaaaaa');
+			},
+			function(opts){
+				console.log('bbbbbb');
+			}
+		],
+		/**
+		{id: 2105 ,level:1,orderd_title: "21.5. 三部分的关系",origin_title:"三部分的关系", open: true,  pId: 21 ,target: "_self", url: "#2105"}
+	
+		function compile_headers_with_item(item) {
+			return "<li>" + item.name + "<li>"
+		}
+		**/
+		compile_headers_with_item:function(item){
+			return " <h"+item.level +"><a href='#" +item.id+ "'>" + item.orderd_title + "</a></h"+item.level +">"
+		},
 		/*
 		 * ztree的位置，默认是在上部
 		 */
@@ -273,54 +316,7 @@ function factor(opts ,count,current) {
 		 * 是否对选中行，显示高亮效果
 		 */
 		is_highlight_selected_line: true,
-		step: 100,
-		ztreeStyle: {
-			width:'260px',
-			overflow: 'auto',
-			position: 'fixed',
-			'z-index': 2147483647,
-			border: '0px none',
-			left: '0px',
-			bottom: '0px',
-			// height:'100px'
-		},
-		ztreeSetting: {
-			view: {
-				dblClickExpand: false,
-				showLine: true,
-				showIcon: false,
-				selectedMulti: false
-			},
-			data: {
-				simpleData: {
-					enable: true,
-					idKey : "id",
-					pIdKey: "pId",
-					// rootPId: "0"
-				}
-			},
-			callback: {
-				beforeClick: function(treeId, treeNode) {
-					$('a').removeClass('curSelectedNode');
-					if(treeNode.id == 1){
-						// TODO: when click root node
-						console.log('click root table of content');
-					}
-					if($.fn.ztree_toc.defaults.is_highlight_selected_line == true) {
-						$('#' + treeNode.id).css('color' ,'red').fadeOut("slow" ,function() {
-						    // Animation complete.
-							$(this).show().css('color','black');
-						});
-					}
-				},
-				onRightClick: function(event, treeId, treeNode) {
-					if(treeNode.id == 1){
-						// TODO: when right_click root node:table content
-						console.log('right_click root table of content');
-					}
-				}
-			}
-		}
+		step: 100 
 	};
 
 })(jQuery);
