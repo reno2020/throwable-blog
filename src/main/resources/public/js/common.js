@@ -48,6 +48,6 @@ function getCurrentYear() {
  */
 $(function () {
     var copyRight = '&copy; 2016-' + getCurrentYear() + ' Throwable. All Rights Reserved.Contact me:739805340@qq.com';
-    $('#copyRight').html(copyRight);
+    $('#copy-right').html(copyRight);
 });
 

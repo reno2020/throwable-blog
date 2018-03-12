@@ -88,7 +88,7 @@
     <hr>
 
     <footer>
-        <p style="text-align: center" id="copyRight"></p>
+        <p style="text-align: center" id="copy-right"></p>
     </footer>
 
 </div><!--/.container-->

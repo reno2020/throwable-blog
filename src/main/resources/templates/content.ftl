@@ -11,7 +11,26 @@
     <!-- Bootstrap -->
     <link href="/css/bootstrap.css" rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">
-    <link href="css/content.css" rel="stylesheet">
+    <link href="css/ztree.css" rel="stylesheet">
+    <style>
+        /*.ztree {*/
+            /*position: fixed;*/
+            /*top: 50px;*/
+            /*bottom: 0;*/
+            /*overflow-y: auto;*/
+            /*padding-top: 30px;*/
+            /*padding-left: 15px;*/
+            /*padding-bottom: 30px;*/
+            /*width: 300px;*/
+            /*color: #364149;*/
+            /*background: #fff;*/
+            /*border-right: 1px solid rgba(0,0,0,.07);*/
+            /*-webkit-transition: left 250ms ease;*/
+            /*-moz-transition: left 250ms ease;*/
+            /*-o-transition: left 250ms ease;*/
+            /*transition: left 250ms ease;*/
+        /*}*/
+    </style>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="js/jquery.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -21,14 +40,18 @@
 
     <!--strapdownify-->
     <script src="js/strapdown.js"></script>
+
+    <script type="text/javascript" src="js/jquery.ztree.core-3.5.js"></script>
+    <script type="text/javascript" src="js/ztree_toc.js"></script>
     <!--toc-->
-    <script src="js/toc.js"></script>
+<#--<script src="js/toc.js"></script>-->
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+
     <![endif]-->
 </head>
 <body>
@@ -47,7 +70,7 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="${base}/index">Home</a></li>
+                <li ><a href="${base}/index">Home</a></li>
                 <li class="active"><a href="#">Spring</a></li>
                 <li><a href="#">Jdk</a></li>
             </ul>
@@ -59,7 +82,7 @@
 
     <div class="row row-offcanvas row-offcanvas-left">
         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
-            <#--<nav class="hidden-xs" id="toc" data-toggle="toc"></nav>-->
+            <ul id="ztree" class="ztree"></ul>
         </div>
         <div class="col-xs-12 col-sm-9" id="content" data-spy="scroll" data-target="#toc">
 
@@ -67,7 +90,7 @@
     </div>
     <hr>
     <footer>
-        <p style="text-align: center" id="copyRight"></p>
+        <p style="text-align: center" id="copy-right"></p>
     </footer>
 
 </div><!--/.container-->
@@ -81,12 +104,19 @@
         success: function (data) {
             markdownFromText(data, "content");
         }
-    })
+    });
+
+    //生成Toc
+    $(document).ready(function () {
+        $('#ztree').ztree_toc({
+            is_auto_number: false,
+            is_expand_all: true,
+            is_highlight_selected_line: false
+        });
+    });
 </script>
 
 <!--toc-->
-<script src="js/toc.js"></script>
-
-<script src="js/content.js"></script>
+<#--<script src="js/toc.js"></script>-->
 
 </body>

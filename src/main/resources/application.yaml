@@ -7,12 +7,15 @@ spring:
     request-context-attribute: context
   application:
     name: throwable-blog
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/throwable-blog?useSSL=false
-    username: root
-    password: root
 mybatis:
   check-config-location: true
   config-location: classpath:mybatis/mybatis-configuration.xml
   mapper-locations: classpath:mybatis/mappings/*.xml
+druid:
+   driver-class-name: com.mysql.jdbc.Driver
+   url: jdbc:mysql://localhost:3306/throwable-blog?useSSL=false
+   username: root
+   password: root
+   # 见DruidDataSource类
+   porperties:
+
