@@ -18,4 +18,17 @@ druid:
    password: root
    # 见DruidDataSource类
    porperties:
+      validationQuery: SELECT 1
+      testOnBorrow: true
+      testOnReturn: false
+      testWhileIdle: true
+      maxActive: 30
+      initialSize: 10
+      minIdle: 10
+      maxWait: 60000
+      removeAbandoned: true
+      removeAbandonedTimeout: 1800
+      logAbandoned: true
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
 
