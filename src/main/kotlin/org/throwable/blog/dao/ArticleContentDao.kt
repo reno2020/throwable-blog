@@ -1,6 +1,8 @@
 package org.throwable.blog.dao
 
 import org.apache.ibatis.annotations.Mapper
+import org.apache.ibatis.annotations.Param
+import org.throwable.blog.model.entity.ArticleContent
 
 /**
  * @author throwable
@@ -11,5 +13,5 @@ import org.apache.ibatis.annotations.Mapper
 @Mapper
 interface ArticleContentDao {
 
-
+    fun fetchContentByArticleId(@Param("id")id : Long) :ArticleContent
 }

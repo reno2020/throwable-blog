@@ -2,21 +2,26 @@
 CREATE TABLE IF NOT EXISTS `t_category` (
   id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '主键',
   category_name VARCHAR(30) NOT NULL COMMENT '类型名称',
+  description VARCHAR(100) NOT NULL COMMENT '类型描述',
   pid BIGINT UNSIGNED DEFAULT '0' COMMENT '父类型ID',
-  sort TINYINT NOT NULL DEFAULT 1 COMMENT '排序数'
+  sort TINYINT NOT NULL DEFAULT 1 COMMENT '排序数',
+  INDEX idx_pid(pid)
 ) COMMENT '文章类型表';
 
 CREATE TABLE IF NOT EXISTS `t_category_count` (
   id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '主键',
   category_id BIGINT UNSIGNED COMMENT '类型id',
   category_name VARCHAR(30) NOT NULL COMMENT '类型名称',
+  pid BIGINT UNSIGNED DEFAULT '0' COMMENT '父类型ID',
   total_count INT UNSIGNED DEFAULT '0' COMMENT '数量',
-  INDEX idx_category_id(category_id)
+  INDEX idx_category_id(category_id),
+  INDEX idx_pid(pid)
 ) COMMENT '文章类型数量统计表';
 
 CREATE TABLE IF NOT EXISTS `t_article` (
   id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '主键',
   title VARCHAR(50) NOT NULL COMMENT '标题',
+  description VARCHAR(30) NOT NULL COMMENT '文章描述,也就是摘要',
   category_id BIGINT UNSIGNED COMMENT '类型id',
   category_name VARCHAR(30) COMMENT '类型名称',
   create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,

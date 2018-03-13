@@ -1,6 +1,7 @@
 package org.throwable.blog.dao
 
 import org.apache.ibatis.annotations.Mapper
+import org.throwable.blog.model.entity.Link
 
 /**
  * @author throwable
@@ -11,4 +12,5 @@ import org.apache.ibatis.annotations.Mapper
 @Mapper
 interface LinkDao {
 
+    fun getAllLinks(): List<Link>
 }

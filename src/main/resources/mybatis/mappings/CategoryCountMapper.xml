@@ -3,5 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.throwable.blog.dao.CategoryCountDao">
 
+    <select id="queryAllCategoryCountByPid" resultType="org.throwable.blog.model.entity.CategoryCount">
+        SELECT * FROM t_category_count WHERE pid = #{pid}
+    </select>
 
 </mapper>

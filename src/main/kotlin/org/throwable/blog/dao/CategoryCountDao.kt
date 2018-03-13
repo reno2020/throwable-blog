@@ -1,6 +1,8 @@
 package org.throwable.blog.dao
 
 import org.apache.ibatis.annotations.Mapper
+import org.apache.ibatis.annotations.Param
+import org.throwable.blog.model.entity.CategoryCount
 
 /**
  * @author throwable
@@ -11,4 +13,5 @@ import org.apache.ibatis.annotations.Mapper
 @Mapper
 interface CategoryCountDao {
 
+    fun queryAllCategoryCountByPid(@Param("pid") pid: Long): List<CategoryCount>
 }

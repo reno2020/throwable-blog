@@ -3,5 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.throwable.blog.dao.ArticleContentDao">
 
+    <select id="fetchContentByArticleId" resultType="org.throwable.blog.model.entity.ArticleContent">
+        SELECT * FROM t_article_content WHERE article_id = #{id}
+    </select>
 
 </mapper>

@@ -1,6 +1,8 @@
 package org.throwable.blog.dao
 
 import org.apache.ibatis.annotations.Mapper
+import org.apache.ibatis.annotations.Param
+import org.throwable.blog.model.entity.Article
 
 /**
  * @author throwable
@@ -11,4 +13,13 @@ import org.apache.ibatis.annotations.Mapper
 @Mapper
 interface ArticleDao {
 
+    fun fetchById(@Param("id") id: Long): Article
+
+    fun queryAllArticles(): List<Article>
+
+    fun queryArticlesByCategoryId(@Param("categoryId") categoryId: Long): List<Article>
+
+    fun queryArticlesByCategoryParentId(@Param("pid") pid: Long): List<Article>
+
+    fun increaseViewById(@Param("id") id: Long?): Int
 }

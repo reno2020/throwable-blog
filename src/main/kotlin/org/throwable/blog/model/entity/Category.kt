@@ -9,6 +9,7 @@ package org.throwable.blog.model.entity
 data class Category(
         var id: Long? = null,
         var categoryName: String? = null,
+        var description: String? = null,
         var pid: Long? = null,
         var sort: Int? = null
 )

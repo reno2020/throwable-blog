@@ -7,6 +7,8 @@ package org.throwable.blog.model.dto
  * @description
  */
 data class ArticleListDTO(
+        var createTime: String? = null,
+        var title: String? = null,
         var description: String? = null,
-        var articleId: Long? = null
+        var id: Long? = null
 )

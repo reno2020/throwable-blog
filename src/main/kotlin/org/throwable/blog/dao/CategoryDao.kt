@@ -15,4 +15,6 @@ interface CategoryDao {
     fun queryAllParentCategories(): List<Category>
 
     fun queryByPid(pid: Long): List<Category>
+
+    fun queryById(id: Long):Category?
 }

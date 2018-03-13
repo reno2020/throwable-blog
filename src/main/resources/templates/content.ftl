@@ -9,9 +9,9 @@
     <title>Throwable's Blog</title>
 
     <!-- Bootstrap -->
-    <link href="/css/bootstrap.css" rel="stylesheet">
-    <link href="css/content.css" rel="stylesheet">
-    <link href="css/oschina.css" rel="stylesheet">
+    <link href="${base}/css/bootstrap.css" rel="stylesheet">
+    <link href="${base}/css/content.css" rel="stylesheet">
+    <link href="${base}/css/oschina.css" rel="stylesheet">
 
     <style>
         .ztree {
@@ -23,16 +23,16 @@
             margin: 0;
     </style>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="js/jquery.js"></script>
+    <script src="${base}/js/jquery.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.js"></script>
+    <script src="${base}/js/bootstrap.js"></script>
 
-    <script src="js/common.js"></script>
+    <script src="${base}/js/common.js"></script>
 
     <!-- strapdownify -->
-    <script src="js/strapdown.js"></script>
+    <script src="${base}/js/strapdown.js"></script>
     <!-- markdown_toc -->
-    <script src="js/markdown_toc.js"></script>
+    <script src="${base}/js/markdown_toc.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -54,13 +54,22 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Throwable's Blog</a>
+            <a class="navbar-brand" href="${base}/index">Throwable's Blog</a>`
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="${base}/index">Home</a></li>
-                <li class="active"><a href="#">Spring</a></li>
-                <li><a href="#">Jdk</a></li>
+                 <#if categories?exists>
+                     <li><a href="${base}/index">Home</a></li>
+                    <#list categories as category>
+                        <#if category.id == parentCategoryId>
+                           <li class="active"><a href="${base}/category/${category.id}">${category.categoryName}</a>
+                           </li>
+                        </#if>
+                        <#if category.id != parentCategoryId>
+                          <li><a href="${base}/category/${category.id}">${category.categoryName}</a></li>
+                        </#if>
+                    </#list>
+                 </#if>
             </ul>
         </div><!-- /.nav-collapse -->
     </div><!-- /.container -->
@@ -73,25 +82,20 @@
             <ul id="ztree" class="ztree"></ul>
         </div>
         <div id="content" class="col-xs-12 col-sm-10">
-            <div id="content-title" class="content-title">测试博客内容</div>
-            <div id="content-description" class="content-description">
-                <!--创建时间-->
-                <span id="content-create-time" class="content-create-time">
-                    创建时间：2018-01-01
-                </span>
-                <!--更新时间-->
-                <span id="content-update-time" class="content-update-time">
-                    更新时间：2018-01-08
-                </span>
-                <!--浏览数-->
-                <span id="content-views" class="content-views">
-                    浏览次数：1000
-                </span>
-                <!--评论数-->
-                <span id="content-replies" class="content-replies">
-                    评论次数：1000
-                </span>
-            </div>
+            <#if article?exists>
+                <div id="content-title" class="content-title">${article.title}</div>
+                <div id="content-description" class="content-description">
+                    <!--创建时间-->
+                    <span id="content-create-time" class="content-create-time">创建时间：${article.createTime}</span>
+                    <!--更新时间-->
+                    <span id="content-update-time" class="content-update-time">更新时间：${article.updateTime}</span>
+                    <!--浏览数-->
+                    <span id="content-views" class="content-views">浏览次数：${article.views}</span>
+                    <!--评论数-->
+                    <span id="content-replies" class="content-replies">评论次数：${article.replies}</span>
+                </div>
+            </#if>
+
             <div id="article-content" data-spy="scroll">
 
             </div>
@@ -107,11 +111,13 @@
 
 <script type="text/javascript">
     $.ajax({
-        url: 'test.md',
+        url: '${base}/article/content/${id}',
         type: 'GET',
         dataType: 'text',
         success: function (data) {
-            markdownFromText(data, "article-content");
+            if (null != data) {
+                markdownFromText(data, "article-content");
+            }
         }
     });
 

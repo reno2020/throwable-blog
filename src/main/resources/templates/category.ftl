@@ -9,14 +9,14 @@
     <title>Throwable's Blog</title>
 
     <!-- Bootstrap -->
-    <link href="/css/bootstrap.css" rel="stylesheet">
-    <link href="css/index.css" rel="stylesheet">
+    <link href="${base}/css/bootstrap.css" rel="stylesheet">
+    <link href="${base}/css/catetory.css" rel="stylesheet">
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="js/jquery.js"></script>
+    <script src="${base}/js/jquery.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.js"></script>
+    <script src="${base}/js/bootstrap.js"></script>
 
-    <script src="js/common.js"></script>
+    <script src="${base}/js/common.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -41,11 +41,17 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="${base}/index">Home</a></li>
                 <#if categories?exists>
-                <#list categories as category>
-                    <li><a href="${base}/category/${category.id}">${category.categoryName}</a></li>
-                </#list>
+                    <li><a href="${base}/index">Home</a></li>
+                    <#list categories as category>
+                        <#if category.id == id>
+                           <li class="active"><a href="${base}/category/${category.id}">${category.categoryName}</a>
+                           </li>
+                        </#if>
+                        <#if category.id != id>
+                          <li><a href="${base}/category/${category.id}">${category.categoryName}</a></li>
+                        </#if>
+                    </#list>
                 </#if>
             </ul>
         </div><!-- /.nav-collapse -->
@@ -61,8 +67,8 @@
                 <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
             </p>
             <div class="jumbotron">
-                <h1>${home.categoryName}</h1>
-                <p>${home.description}</p>
+                <h1>${category.categoryName}</h1>
+                <p>${category.description}</p>
             </div>
             <div class="row">
                  <#if articles?exists>
@@ -77,12 +83,11 @@
             </div>
         </div>
 
-        <#if links?exists>
-        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
-            <div class="friendly-link-title">友情链接</div>
+        <#if categoryCounts?exists>
+        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="category-sidebar">
             <div class="list-group">
-                   <#list links as link>
-                       <a href="${link.url}" class="list-group-item" target="_blank">${link.title}</a>
+                   <#list categoryCounts as categoryCount>
+                       <a href="${base}/category/${categoryCount.categoryId}" class="list-group-item">${categoryCount.categoryName}<span class="badge">${categoryCount.totalCount}</span></a>
                    </#list>
             </div>
         </div>
@@ -96,7 +101,7 @@
     </footer>
 </div>
 
-<script src="js/index.js"></script>
+<script src="${base}/category.js"></script>
 
 </body>
 </html>

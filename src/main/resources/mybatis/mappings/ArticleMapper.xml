@@ -3,5 +3,24 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.throwable.blog.dao.ArticleDao">
 
+    <select id="fetchById" resultType="org.throwable.blog.model.entity.Article">
+        SELECT * FROM t_article WHERE id = #{id}
+    </select>
+
+    <select id="queryAllArticles" resultType="org.throwable.blog.model.entity.Article">
+         SELECT * FROM t_article
+    </select>
+
+    <select id="queryArticlesByCategoryId" resultType="org.throwable.blog.model.entity.Article">
+        SELECT * FROM t_article WHERE category_id = #{categoryId}
+    </select>
+
+    <select id="queryArticlesByCategoryParentId" resultType="org.throwable.blog.model.entity.Article">
+        SELECT t.* FROM t_article t,t_category c WHERE t.category_id = c.id AND c.pid = #{pid}
+    </select>
+
+    <update id="increaseViewById">
+        UPDATE t_article SET views = views + 1 WHERE id = #{id}
+    </update>
 
 </mapper>

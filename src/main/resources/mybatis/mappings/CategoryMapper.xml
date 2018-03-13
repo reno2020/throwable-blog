@@ -11,4 +11,8 @@
         SELECT * FROM t_category WHERE pid = #{pid}
     </select>
 
+    <select id="queryById" resultType="org.throwable.blog.model.entity.Category">
+        SELECT * FROM t_category WHERE id = #{pid}
+    </select>
+
 </mapper>

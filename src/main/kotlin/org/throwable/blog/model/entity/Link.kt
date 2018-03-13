@@ -11,6 +11,7 @@ import java.time.LocalDateTime
 data class Link(
         var id: Long? = null,
         var title: String? = null,
+        var url: String? = null,
         var sort: Int? = null,
         var createTime: LocalDateTime? = null,
         var updateTime: LocalDateTime? = null,

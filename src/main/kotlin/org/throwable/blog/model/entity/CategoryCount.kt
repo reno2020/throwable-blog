@@ -9,6 +9,7 @@ package org.throwable.blog.model.entity
 data class CategoryCount(
         var id: Long? = null,
         var categoryId: Long? = null,
-        var category_name: String? = null,
-        var total_count: Int? = null
+        var pid: Long? = null,
+        var categoryName: String? = null,
+        var totalCount: Int? = null
 )
