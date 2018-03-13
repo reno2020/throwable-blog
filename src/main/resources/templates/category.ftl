@@ -7,10 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>Throwable's Blog</title>
+    <link rel="shortcut icon" href="${base}/img/favicon.ico"/>
 
     <!-- Bootstrap -->
     <link href="${base}/css/bootstrap.css" rel="stylesheet">
     <link href="${base}/css/catetory.css" rel="stylesheet">
+    <link href="${base}/css/octicons.min.css" rel="stylesheet">
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="${base}/js/jquery.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -87,7 +89,9 @@
         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="category-sidebar">
             <div class="list-group">
                    <#list categoryCounts as categoryCount>
-                       <a href="${base}/category/${categoryCount.categoryId}" class="list-group-item">${categoryCount.categoryName}<span class="badge">${categoryCount.totalCount}</span></a>
+                       <a href="${base}/category/${categoryCount.categoryId}"
+                          class="list-group-item">${categoryCount.categoryName}<span
+                               class="badge">${categoryCount.totalCount}</span></a>
                    </#list>
             </div>
         </div>

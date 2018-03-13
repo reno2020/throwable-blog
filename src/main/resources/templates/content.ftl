@@ -7,12 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>Throwable's Blog</title>
-
+    <link rel="shortcut icon" href="${base}/img/favicon.ico"/>
     <!-- Bootstrap -->
     <link href="${base}/css/bootstrap.css" rel="stylesheet">
     <link href="${base}/css/content.css" rel="stylesheet">
     <link href="${base}/css/oschina.css" rel="stylesheet">
-
+    <link href="${base}/css/octicons.min.css" rel="stylesheet">
     <style>
         .ztree {
             overflow: auto;
