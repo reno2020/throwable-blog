@@ -55,7 +55,7 @@ class BlogController {
         val modelAndView = ModelAndView()
         modelAndView.viewName = "content"
         val article = blogService.queryArticleById(id)
-        val categoryId = article.categoryId ?: 0
+        val categoryId = article.parentCategoryId ?: 0
         val categories = blogService.queryAllParentCategories()
         val parentCategory = blogService.fetchParentCategory(categoryId)
         modelAndView.addObject("article", article)

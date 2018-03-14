@@ -77,8 +77,10 @@ class BlogService {
         val article = articleDao.fetchById(id)
         return ArticleDTO(
                 id = article.id,
-                categoryId = article.categoryId,
-                categoryName = article.categoryName,
+                parentCategoryId = article.parentCategoryId,
+                parentCategoryName = article.parentCategoryName,
+                childCategoryId = article.childCategoryId,
+                childCategoryName = article.childCategoryName,
                 createTime = LocalDateTimeUtils.format(article.createTime),
                 updateTime = LocalDateTimeUtils.format(article.updateTime),
                 description = article.description,
