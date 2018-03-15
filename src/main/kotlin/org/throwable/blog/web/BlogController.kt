@@ -37,16 +37,29 @@ class BlogController {
         return modelAndView
     }
 
-    @GetMapping(value = ["/category/{id}"])
-    fun category(@PathVariable(name = "id", required = true) id: Long): ModelAndView {
+    @GetMapping(value = ["/parent/category/{id}"])
+    fun parentCategory(@PathVariable(name = "id", required = true) id: Long): ModelAndView {
         val modelAndView = ModelAndView()
         val categories = blogService.queryAllParentCategories()
-        modelAndView.viewName = "category"
+        modelAndView.viewName = "parent_category"
         modelAndView.addObject("categoryCounts", blogService.queryAllCategoryCountByPid(id))
         modelAndView.addObject("categories", categories.filter { it.id != 1L })
         modelAndView.addObject("category", categories.last { it.id == id })
         modelAndView.addObject("id", id)
-        modelAndView.addObject("articles", blogService.queryArticlesByCategoryId(id))
+        modelAndView.addObject("articles", blogService.queryArticlesByParentCategoryId(id))
+        return modelAndView
+    }
+
+    @GetMapping(value = ["/child/category/{id}"])
+    fun childCategory(@PathVariable(name = "id", required = true) id: Long): ModelAndView {
+        val modelAndView = ModelAndView()
+        val categories = blogService.queryAllParentCategories()
+        val currentSubCategory = blogService.fetchCategoryById(id)
+        modelAndView.viewName = "child_category"
+        modelAndView.addObject("categories", categories.filter { it.id != 1L })
+        modelAndView.addObject("parentCategory", categories.first { it.id == currentSubCategory.pid })
+        modelAndView.addObject("id", id)
+        modelAndView.addObject("articles", blogService.queryArticlesByChildCategoryId(id))
         return modelAndView
     }
 
@@ -55,14 +68,12 @@ class BlogController {
         val modelAndView = ModelAndView()
         modelAndView.viewName = "content"
         val article = blogService.queryArticleById(id)
-        val categoryId = article.parentCategoryId ?: 0
         val categories = blogService.queryAllParentCategories()
-        val parentCategory = blogService.fetchParentCategory(categoryId)
         modelAndView.addObject("article", article)
         modelAndView.addObject("id", id)
-        modelAndView.addObject("categoryId", categoryId)
-        modelAndView.addObject("parentCategoryId", parentCategory?.id ?: 0)
         modelAndView.addObject("categories", categories.filter { it.id != 1L })
+        //首页的类型id必须为1L
+        modelAndView.addObject("homeCategoryId", 1L)
         //异步发送增加浏览量的消息
         simpleApplicationEventMulticaster.multicastEvent(ArticleViewEvent(id))
         return modelAndView

@@ -16,5 +16,5 @@ interface CategoryDao {
 
     fun queryByPid(pid: Long): List<Category>
 
-    fun queryById(id: Long):Category?
+    fun queryById(id: Long):Category
 }

@@ -13,6 +13,8 @@
     <!-- editor.md -->
     <link rel="stylesheet" href="${base}/css/markdown/style.css"/>
     <link rel="stylesheet" href="${base}/css/markdown/editormd.preview.css"/>
+    <!-- octicons -->
+    <link rel="stylesheet" href="${base}/css/octicons.min.css"/>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="${base}/js/jquery.min.js"></script>
     <script src="${base}/js/bootstrap.js"></script>
@@ -64,6 +66,25 @@
             padding-right: 430px;
             margin: 0;
         }
+
+        .article-metadata {
+            margin-top: 10px;
+        }
+
+        .article-metadata-item {
+            margin-right: 15px;
+        }
+
+        .article-title {
+            font-weight: 700;
+            color: #35a986;
+            margin-bottom: 0.5em;
+            padding-bottom: 0.3em;
+            border-bottom: 1px solid #eee;
+        }
+        .breadcrumb{
+            margin-bottom: 0px;
+        }
     </style>
 </head>
 <body>
@@ -82,18 +103,18 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-            <#--<#if categories?exists>-->
-            <#--<li><a href="${base}/index">Home</a></li>-->
-            <#--<#list categories as category>-->
-            <#--<#if category.id == parentCategoryId>-->
-            <#--<li class="active"><a href="${base}/category/${category.id}">${category.categoryName}</a>-->
-            <#--</li>-->
-            <#--</#if>-->
-            <#--<#if category.id != parentCategoryId>-->
-            <#--<li><a href="${base}/category/${category.id}">${category.categoryName}</a></li>-->
-            <#--</#if>-->
-            <#--</#list>-->
-            <#--</#if>-->
+            <#if categories?exists>
+                <li><a href="${base}/index">Home</a></li>
+            <#list categories as category>
+                <#if category.id == article.parentCategoryId>
+            <li class="active"><a href="${base}/parent/category/${category.id}">${category.categoryName}</a>
+            </li>
+                </#if>
+                <#if category.id != article.parentCategoryId>
+            <li><a href="${base}/parent/category/${category.id}">${category.categoryName}</a></li>
+                </#if>
+            </#list>
+            </#if>
             </ul>
         </div><!-- /.nav-collapse -->
     </div><!-- /.container -->
@@ -101,21 +122,48 @@
 
 <div class="container-fluid">
     <div id="layout">
-        <header>
-            <h1>Markdown转HTML的显示处理之自定义 ToC 容器</h1>
-            <p>即：非编辑情况下的HTML预览</p>
-            <p>HTML Preview (markdown to html and custom ToC container)</p>
-        </header>
-        <div id="sidebar">
-            <h1>目录</h1>
-            <div class="markdown-body editormd-preview-container" id="markdown-toc-container"></div>
-        </div>
-        <div id="markdown-content">
-            <textarea style="display:none;" name="markdown-content-doc"></textarea>
-        </div>
+        <#if article?exists>
+            <!-- 面包屑 -->
+            <ol class="breadcrumb">
+                <li><a href="${base}/parent/category/${article.parentCategoryId}">${article.parentCategoryName}</a></li>
+                <!-- 这里要排除首页 -->
+                <#if article.childCategoryId != homeCategoryId>
+                <li><a href="${base}/child/category/${article.childCategoryId}">${article.childCategoryName}</a></li>
+                </#if>
+                <li class="active">${article.title}</li>
+            </ol>
+            <header>
+                <h1 class="article-title">${article.title}</h1>
+                <p>${article.description}</p>
+                <p class="article-metadata">
+                    <span class="article-metadata-item"><i><object data="${base}/svg/clock.svg"
+                                                                   type="image/svg+xml"></object></i>&nbsp;&nbsp;${article.createTime}</span>
+                    <span class="article-metadata-item"><i><object data="${base}/svg/dashboard.svg"
+                                                                   type="image/svg+xml"></object></i>&nbsp;&nbsp;${article.updateTime}</span>
+                    <span class="article-metadata-item"><i><object data="${base}/svg/eye.svg"
+                                                                   type="image/svg+xml"></object></i>&nbsp;&nbsp;${article.views}</span>
+                </p>
+            </header>
+            <div id="sidebar">
+                <h1>目录</h1>
+                <div class="markdown-body editormd-preview-container" id="markdown-toc-container"></div>
+            </div>
+            <div id="markdown-content">
+                <textarea style="display:none;" name="markdown-content-doc"></textarea>
+            </div>
+        </#if>
     </div>
     <hr>
+    <!-- 底栏 -->
     <footer>
+        <p style="text-align: center">
+            <a href="https://github.com/zjcscut" target="_blank">
+                <i>
+                    <object style="width: 30px;height: 30px" data="${base}/svg/mark-github.svg"
+                            type="image/svg+xml"></object>
+                </i>
+            </a>
+        </p>
         <p style="text-align: center" id="copy-right"></p>
     </footer>
 

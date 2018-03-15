@@ -11,12 +11,12 @@
          SELECT * FROM t_article
     </select>
 
-    <select id="queryArticlesByCategoryId" resultType="org.throwable.blog.model.entity.Article">
-        SELECT * FROM t_article WHERE category_id = #{categoryId}
+    <select id="queryArticlesByChildCategoryId" resultType="org.throwable.blog.model.entity.Article">
+        SELECT * FROM t_article t WHERE child_category_id = #{childCategoryId}
     </select>
 
-    <select id="queryArticlesByCategoryParentId" resultType="org.throwable.blog.model.entity.Article">
-        SELECT t.* FROM t_article t,t_category c WHERE t.category_id = c.id AND c.pid = #{pid}
+    <select id="queryArticlesByParentCategoryId" resultType="org.throwable.blog.model.entity.Article">
+        SELECT * FROM t_article t WHERE parent_category_id = #{parentCategoryId}
     </select>
 
     <update id="increaseViewById">

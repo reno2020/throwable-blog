@@ -38,8 +38,8 @@ class BlogAutoConfiguration(var simpleApplicationEventMulticaster: SimpleApplica
 
         private val counter = AtomicInteger()
 
-        override fun newThread(r: Runnable?): Thread {
-            val thread = Thread(r)
+        override fun newThread(runnable: Runnable?): Thread {
+            val thread = Thread(runnable)
             thread.isDaemon = true
             thread.name = "$THREAD_PREFIX-" + counter.incrementAndGet()
             return thread

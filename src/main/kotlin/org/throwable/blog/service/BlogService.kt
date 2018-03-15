@@ -5,7 +5,10 @@ import org.springframework.stereotype.Service
 import org.throwable.blog.dao.*
 import org.throwable.blog.model.dto.ArticleDTO
 import org.throwable.blog.model.dto.ArticleListDTO
-import org.throwable.blog.model.entity.*
+import org.throwable.blog.model.entity.ArticleContent
+import org.throwable.blog.model.entity.Category
+import org.throwable.blog.model.entity.CategoryCount
+import org.throwable.blog.model.entity.Link
 import org.throwable.blog.utils.LocalDateTimeUtils
 
 /**
@@ -49,22 +52,28 @@ class BlogService {
         val articles = articleDao.queryAllArticles().sortedBy { it.createTime }
         val articlesDTO = ArrayList<ArticleListDTO>(articles.size)
         articles.forEach {
-            articlesDTO.add(ArticleListDTO(LocalDateTimeUtils.format(it.createTime), it.title, it.description, it.id))
+            articlesDTO.add(ArticleListDTO(LocalDateTimeUtils.format(it.createTime), it.title, it.description, it.id, it.views,
+                    it.parentCategoryId, it.parentCategoryName, it.childCategoryId, it.childCategoryName))
         }
         return articlesDTO
     }
 
-    fun queryArticlesByCategoryId(categoryId: Long): List<ArticleListDTO> {
-        val category = categoryDao.queryById(categoryId)
-        val articles =
-                if (null != category && category.pid == 0L) {
-                    articleDao.queryArticlesByCategoryParentId(categoryId).sortedBy { it.createTime }
-                } else {
-                    articleDao.queryArticlesByCategoryId(categoryId).sortedBy { it.createTime }
-                }
+    fun queryArticlesByParentCategoryId(parentCategoryId: Long): List<ArticleListDTO> {
+        val articles = articleDao.queryArticlesByParentCategoryId(parentCategoryId)
         val articlesDTO = ArrayList<ArticleListDTO>(articles.size)
         articles.forEach {
-            articlesDTO.add(ArticleListDTO(LocalDateTimeUtils.format(it.createTime), it.title, it.description, it.id))
+            articlesDTO.add(ArticleListDTO(LocalDateTimeUtils.format(it.createTime), it.title, it.description, it.id, it.views,
+                    it.parentCategoryId, it.parentCategoryName, it.childCategoryId, it.childCategoryName))
+        }
+        return articlesDTO
+    }
+
+    fun queryArticlesByChildCategoryId(childCategoryId: Long): List<ArticleListDTO> {
+        val articles = articleDao.queryArticlesByChildCategoryId(childCategoryId)
+        val articlesDTO = ArrayList<ArticleListDTO>(articles.size)
+        articles.forEach {
+            articlesDTO.add(ArticleListDTO(LocalDateTimeUtils.format(it.createTime), it.title, it.description, it.id, it.views,
+                    it.parentCategoryId, it.parentCategoryName, it.childCategoryId, it.childCategoryName))
         }
         return articlesDTO
     }
@@ -94,7 +103,7 @@ class BlogService {
         return articleContentDao.fetchContentByArticleId(id)
     }
 
-    fun fetchParentCategory(categoryId: Long): Category? {
+    fun fetchCategoryById(categoryId: Long): Category {
         return categoryDao.queryById(categoryId)
     }
 }

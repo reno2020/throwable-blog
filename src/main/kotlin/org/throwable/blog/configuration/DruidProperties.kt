@@ -15,9 +15,17 @@ data class DruidProperties(
         var username: String? = null,
         var password: String? = null,
         var driverClassName: String? = null,
-        var porperties: Properties? = null
+        var porperties: Map<String, String>? = null
 ) {
     companion object {
         const val PREFIX = "druid"
+    }
+
+    fun convertProperties(): Properties {
+        val p = Properties()
+        porperties?.entries?.forEach {
+            p[it.key] = it.value
+        }
+        return p
     }
 }

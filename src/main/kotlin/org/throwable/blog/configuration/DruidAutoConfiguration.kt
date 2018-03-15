@@ -19,7 +19,7 @@ class DruidAutoConfiguration(var druidProperties: DruidProperties) {
     @Bean
     fun druidDataSource(): DruidDataSource {
         val druidDataSource = if (null != druidProperties.porperties) {
-            DruidDataSourceFactory.createDataSource(druidProperties.porperties) as DruidDataSource
+            DruidDataSourceFactory.createDataSource(druidProperties.convertProperties()) as DruidDataSource
         } else {
             DruidDataSource()
         }

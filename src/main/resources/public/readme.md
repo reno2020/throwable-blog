@@ -3,7 +3,7 @@
 - jdk：1.8
 - kotlin：1.2.30（**人生苦短，我用kotlin**）
 - springBoot：2.0.0.RELEASE
-- 其他：druid、mysql、freemarker、mybatis等
+- 其他：druid、MYSQL、freemarker、mybatis等
 
 ## 前端
 我前端比较水，随便拼凑的页面。
@@ -14,6 +14,7 @@
 
 # 遇到的问题
 - \[toc\]生成插件找了很久找不到合适的，后来找到了[i5ting_ztree_toc](https://github.com/i5ting/i5ting_ztree_toc)
+- 发现i5ting的兼容性有问题，于是找到了更牛逼的[editor.md](http://pandao.github.io/editor.md/)
 
 # 彩蛋
 如果不介意代码写得烂，可以玩下这个博客的源码：[github地址](https://github.com/zjcscut/throwable-blog)
@@ -28,6 +29,7 @@ fun main(vararg args: String) {
     runApplication<Application>(* args)
 }
 
+# 下面测试一下右侧的目录
 # 彩蛋
 # 彩蛋
 # 彩蛋

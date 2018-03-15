@@ -17,9 +17,9 @@ interface ArticleDao {
 
     fun queryAllArticles(): List<Article>
 
-    fun queryArticlesByCategoryId(@Param("categoryId") categoryId: Long): List<Article>
+    fun queryArticlesByChildCategoryId(@Param("childCategoryId") categoryId: Long): List<Article>
 
-    fun queryArticlesByCategoryParentId(@Param("pid") pid: Long): List<Article>
+    fun queryArticlesByParentCategoryId(@Param("parentCategoryId") parentCategoryId: Long): List<Article>
 
     fun increaseViewById(@Param("id") id: Long?): Int
 }
