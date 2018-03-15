@@ -182,7 +182,7 @@
 <script type="text/javascript">
     $(function () {
         var view;
-        $.get("${base}/readme.md", function (markdown) {
+        $.get("${base}/article/content/${article.id}", function (markdown) {
             view = editormd.markdownToHTML("markdown-content", {
                 markdown: markdown,//+ "\r\n" + $("#append-test").text(),
                 //htmlDecode      : true,       // 开启 HTML 标签解析，为了安全性，默认不开启

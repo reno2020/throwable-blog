@@ -35,8 +35,8 @@ class BlogService {
     @Autowired
     private lateinit var articleContentDao: ArticleContentDao
 
-    fun extractIndexCategory(catetories: List<Category>): Category {
-        return catetories.first { it.sort == 1 }
+    fun extractIndexCategory(categories: List<Category>): Category {
+        return categories.first { it.sort == 1 }
     }
 
     fun queryAllParentCategories(): List<Category> {

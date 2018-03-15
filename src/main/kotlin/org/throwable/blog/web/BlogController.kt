@@ -57,6 +57,7 @@ class BlogController {
         val currentSubCategory = blogService.fetchCategoryById(id)
         modelAndView.viewName = "child_category"
         modelAndView.addObject("categories", categories.filter { it.id != 1L })
+        modelAndView.addObject("category", currentSubCategory)
         modelAndView.addObject("parentCategory", categories.first { it.id == currentSubCategory.pid })
         modelAndView.addObject("id", id)
         modelAndView.addObject("articles", blogService.queryArticlesByChildCategoryId(id))

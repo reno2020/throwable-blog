@@ -19,6 +19,22 @@
 
     <script src="${base}/js/common.js"></script>
 
+    <style>
+        .article-metadata-item {
+            margin-right: 15px;
+        }
+
+        .article-metadata-description {
+            margin-top: 10px;
+        }
+
+        .article-metadata-title{
+            font-size: 25px;
+            font-weight: 700;
+            color: dodgerblue;
+        }
+    </style>
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

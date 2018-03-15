@@ -24,12 +24,14 @@
             margin-right: 15px;
         }
 
-        .article-metadata-item {
-
+        .article-metadata-description {
+            margin-top: 10px;
         }
 
-        .article-metadata{
-
+        .article-metadata-title{
+            font-size: 25px;
+            font-weight: 700;
+            color: dodgerblue;
         }
     </style>
 
