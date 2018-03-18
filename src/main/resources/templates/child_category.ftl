@@ -129,9 +129,6 @@
     </p>
     <hr>
     <footer>
-        <p style="text-align: right">
-            <a title="返回顶部" id="return-to-top"><i class="fa fa-2x fa-arrow-up"></i></a>
-        </p>
         <p style="text-align: center">
             <a href="https://github.com/zjcscut" target="_blank">
                 <i class="fa fa-2x fa-github"></i>
