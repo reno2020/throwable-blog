@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `t_category_count` (
 CREATE TABLE IF NOT EXISTS `t_article` (
   id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '主键',
   title VARCHAR(50) NOT NULL COMMENT '标题',
-  description VARCHAR(30) NOT NULL COMMENT '文章描述,也就是摘要',
+  description VARCHAR(100) NOT NULL COMMENT '文章描述,也就是摘要',
   parent_category_id BIGINT UNSIGNED COMMENT '父类型id',
   parent_category_name VARCHAR(30) COMMENT '父类型名称',
   child_category_id BIGINT UNSIGNED COMMENT '子类型id',
