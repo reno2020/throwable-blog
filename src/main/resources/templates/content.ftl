@@ -13,13 +13,13 @@
     <!-- editor.md -->
     <link rel="stylesheet" href="${base}/css/markdown/style.css"/>
     <link rel="stylesheet" href="${base}/css/markdown/editormd.preview.css"/>
-    <!-- octicons -->
-    <link rel="stylesheet" href="${base}/css/octicons.min.css"/>
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="${base}/js/jquery.min.js"></script>
     <script src="${base}/js/bootstrap.js"></script>
 
     <script src="${base}/js/common.js"></script>
+    <script src="${base}/js/content.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -35,9 +35,9 @@
         }
 
         #sidebar {
-            width: 400px;
-            height: auto;
-            position: fixed;
+            /*width: 400px;*/
+            /*height: auto;*/
+            /*position: fixed;*/
             top: 50px;
             right: 0;
             overflow: hidden;
@@ -63,8 +63,16 @@
 
         #markdown-content {
             padding-left: 0;
-            padding-right: 430px;
             margin: 0;
+        }
+
+        .article {
+
+        }
+
+        .article-header {
+            text-align: center;
+            margin-bottom: 5px;
         }
 
         .article-metadata {
@@ -82,13 +90,13 @@
             padding-bottom: 0.3em;
             border-bottom: 1px solid #eee;
         }
-        .breadcrumb{
-            margin-bottom: 0px;
+
+        .breadcrumb {
+            margin-bottom: 5px;
         }
     </style>
 </head>
 <body>
-
 <nav class="navbar navbar-inverse navbar-static-top">
     <div class="container">
         <div class="navbar-header">
@@ -124,44 +132,58 @@
     <div id="layout">
         <#if article?exists>
             <!-- 面包屑 -->
-            <ol class="breadcrumb">
-                <li><a href="${base}/parent/category/${article.parentCategoryId}">${article.parentCategoryName}</a></li>
-                <!-- 这里要排除首页 -->
+            <div class="row row-offcanvas row-offcanvas-right">
+                <!-- 面包屑 -->
+                <ol class="breadcrumb">
+                    <#if article.parentCategoryId == homeCategoryId>
+                     <li><a href="${base}/index">Home</a></li>
+                    <#elseif article.parentCategoryId != homeCategoryId>
+                    <li><a href="${base}/parent/category/${article.parentCategoryId}">${article.parentCategoryName}</a></li>
+                    </#if>
+                    <!-- 这里要排除首页 -->
                 <#if article.childCategoryId != homeCategoryId>
                 <li><a href="${base}/child/category/${article.childCategoryId}">${article.childCategoryName}</a></li>
                 </#if>
-                <li class="active">${article.title}</li>
-            </ol>
-            <header>
-                <h1 class="article-title">${article.title}</h1>
-                <p>${article.description}</p>
-                <p class="article-metadata">
-                    <span class="article-metadata-item"><i><object data="${base}/svg/clock.svg"
-                                                                   type="image/svg+xml"></object></i>&nbsp;&nbsp;${article.createTime}</span>
-                    <span class="article-metadata-item"><i><object data="${base}/svg/dashboard.svg"
-                                                                   type="image/svg+xml"></object></i>&nbsp;&nbsp;${article.updateTime}</span>
-                    <span class="article-metadata-item"><i><object data="${base}/svg/eye.svg"
-                                                                   type="image/svg+xml"></object></i>&nbsp;&nbsp;${article.views}</span>
-                </p>
-            </header>
-            <div id="sidebar">
-                <h1>目录</h1>
-                <div class="markdown-body editormd-preview-container" id="markdown-toc-container"></div>
-            </div>
-            <div id="markdown-content">
-                <textarea style="display:none;" name="markdown-content-doc"></textarea>
+                    <li class="active">${article.title}</li>
+                </ol>
+                <div class="article article-header">
+                    <header>
+                        <h1 class="article article-title">${article.title}</h1>
+                        <p>${article.description}</p>
+                        <p class="article article-metadata">
+                    <span class="article article-metadata-item"><i><object data="${base}/svg/clock.svg"
+                                                                           type="image/svg+xml"></object></i>&nbsp;&nbsp;${article.createTime}</span>
+                            <span class="article article-metadata-item"><i><object data="${base}/svg/dashboard.svg"
+                                                                                   type="image/svg+xml"></object></i>&nbsp;&nbsp;${article.updateTime}</span>
+                            <span class="article article-metadata-item"><i><object data="${base}/svg/eye.svg"
+                                                                                   type="image/svg+xml"></object></i>&nbsp;&nbsp;${article.views}</span>
+                        </p>
+                    </header>
+                </div>
+                <hr>
+                <div class="col-xs-12 col-sm-2 sidebar-offcanvas">
+                    <div id="sidebar">
+                        <h1>目录</h1>
+                        <div class="markdown-body editormd-preview-container" id="markdown-toc-container"></div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-10">
+                    <div id="markdown-content">
+                        <textarea style="display:none;" name="markdown-content-toc"></textarea>
+                    </div>
+                </div>
             </div>
         </#if>
     </div>
+    <p style="text-align: right;padding-right: 30px">
+        <a title="返回顶部" id="return-to-top"><i class="fa fa-3x fa-arrow-up"></i></a>
+    </p>
     <hr>
     <!-- 底栏 -->
     <footer>
         <p style="text-align: center">
             <a href="https://github.com/zjcscut" target="_blank">
-                <i>
-                    <object style="width: 30px;height: 30px" data="${base}/svg/mark-github.svg"
-                            type="image/svg+xml"></object>
-                </i>
+                <i class="fa fa-2x fa-github"></i>
             </a>
         </p>
         <p style="text-align: center" id="copy-right"></p>

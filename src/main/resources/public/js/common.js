@@ -51,3 +51,13 @@ $(function () {
     $('#copy-right').html(copyRight);
 });
 
+/**
+ * 回到顶部
+ */
+$(document).ready(function () {
+    $('#return-to-top').click(function () {
+            $('html,body').animate({scrollTop: 0}, 700);
+        }
+    );
+});
+

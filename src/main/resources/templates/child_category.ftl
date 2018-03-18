@@ -8,10 +8,10 @@
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>Throwable's Blog</title>
     <link rel="shortcut icon" href="${base}/img/favicon.ico"/>
-
     <!-- Bootstrap -->
     <link href="${base}/css/bootstrap.css" rel="stylesheet">
     <link href="${base}/css/catetory.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="${base}/js/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -124,16 +124,17 @@
             </div>
         </div>
     </div>
-
+    <p style="text-align: right;padding-right: 30px">
+        <a title="返回顶部" id="return-to-top"><i class="fa fa-3x fa-arrow-up"></i></a>
+    </p>
     <hr>
-
     <footer>
+        <p style="text-align: right">
+            <a title="返回顶部" id="return-to-top"><i class="fa fa-2x fa-arrow-up"></i></a>
+        </p>
         <p style="text-align: center">
             <a href="https://github.com/zjcscut" target="_blank">
-                <i>
-                    <object style="width: 30px;height: 30px" data="${base}/svg/mark-github.svg"
-                            type="image/svg+xml"></object>
-                </i>
+                <i class="fa fa-2x fa-github"></i>
             </a>
         </p>
         <p style="text-align: center" id="copy-right"></p>
