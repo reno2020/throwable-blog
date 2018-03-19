@@ -7,6 +7,10 @@ spring:
     request-context-attribute: context
   application:
     name: throwable-blog
+  rabbitmq:
+    host: localhost
+    username: guest
+    password: guest
 mybatis:
   check-config-location: true
   config-location: classpath:mybatis/mybatis-configuration.xml

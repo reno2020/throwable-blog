@@ -1,9 +1,14 @@
 package org.throwable.blog.configuration
 
+import org.springframework.amqp.core.*
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory
+import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.event.SimpleApplicationEventMulticaster
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
+import org.throwable.blog.common.BlogConstant
+import org.throwable.blog.listener.ViewIncrementListener
 import java.util.concurrent.ThreadFactory
 import java.util.concurrent.ThreadPoolExecutor
 import java.util.concurrent.atomic.AtomicInteger
@@ -49,5 +54,26 @@ class BlogAutoConfiguration(var simpleApplicationEventMulticaster: SimpleApplica
     @PostConstruct
     fun postConstruct() {
         simpleApplicationEventMulticaster.setTaskExecutor(threadPoolTaskExecutor())
+    }
+
+    @Bean
+    fun articleViewEventListenerContainer(rabbitConnectionFactory: CachingConnectionFactory,
+                                          amqpAdmin: AmqpAdmin,
+                                          viewIncrementListener: ViewIncrementListener): SimpleMessageListenerContainer {
+        val queue = Queue(BlogConstant.ARTICLE_VIEW_INCREMENT_QUEUE)
+        amqpAdmin.declareQueue(queue)
+        val exchange = DirectExchange(BlogConstant.ARTICLE_VIEW_INCREMENT_QUEUE)
+        amqpAdmin.declareExchange(exchange)
+        val binding = BindingBuilder.bind(queue).to(exchange).with(BlogConstant.ARTICLE_VIEW_INCREMENT_QUEUE)
+        amqpAdmin.declareBinding(binding)
+        val container = SimpleMessageListenerContainer()
+        container.connectionFactory = rabbitConnectionFactory
+        container.setQueueNames(BlogConstant.ARTICLE_VIEW_INCREMENT_QUEUE)
+        //这里初始化消费者和最大消费者都设置为1可以防止并发
+        container.setConcurrentConsumers(1)
+        container.setMaxConcurrentConsumers(1)
+        container.acknowledgeMode = AcknowledgeMode.NONE
+        container.messageListener = viewIncrementListener
+        return container
     }
 }
