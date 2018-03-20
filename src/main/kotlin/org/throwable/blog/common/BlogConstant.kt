@@ -10,6 +10,6 @@ class BlogConstant {
 
     companion object {
 
-        val ARTICLE_VIEW_INCREMENT_QUEUE = "throwable.blog.article.view.increment"
+        const val ARTICLE_VIEW_INCREMENT_QUEUE = "throwable.blog.article.view.increment"
     }
 }

@@ -12,7 +12,7 @@ import org.throwable.blog.event.ArticleViewEvent
 /**
  * @author throwable
  * @version v1.0
- * @description 用于增加每篇文章的阅读数
+ * @description 用于增加每篇文章的阅读数，限制单个消费者，基于单线程不会产生并发问题
  * @since 2018/3/19 11:32
  */
 @Component

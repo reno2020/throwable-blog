@@ -33,6 +33,32 @@
             font-weight: 700;
             color: dodgerblue;
         }
+
+        .article-type-original {
+            background-color: #337ab7;
+            padding: 0.6em 0.6em 0.3em;
+            font-size: 75%;
+            font-weight: bold;
+            line-height: 1;
+            color: #fff;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 1.25em;
+        }
+
+        .article-type-reprint{
+            background-color: #5cb85c;
+            padding: 0.6em 0.6em 0.3em;
+            font-size: 75%;
+            font-weight: bold;
+            line-height: 1;
+            color: #fff;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 1.25em;
+        }
     </style>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -92,6 +118,14 @@
                                  </div>
                                  <div class="panel-body">
                                      <div>
+                                         <#if article.articleType == 1>
+                                             <span class="article-type-original article-metadata-item">原创</span>
+                                         <#elseif article.articleType == 2>
+                                             <span class="article-type-reprint article-metadata-item">转载</span>
+                                         </#if>
+
+                                         <span class="article-metadata-item"><i><object data="${base}/svg/mention.svg"
+                                                                                        type="image/svg+xml"></object></i>&nbsp;&nbsp;${article.author}</span>
                                          <span class="article-metadata-item"><i><object data="${base}/svg/clock.svg"
                                                                                         type="image/svg+xml"></object></i>&nbsp;&nbsp;${article.createTime}</span>
                                          <span class="article-metadata-item"><i><object data="${base}/svg/eye.svg"

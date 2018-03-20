@@ -30,6 +30,8 @@ CREATE TABLE IF NOT EXISTS `t_article` (
   update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   views INT DEFAULT 0 COMMENT '浏览数量',
   replies INT DEFAULT 0 COMMENT '回复数量',
+  article_type TINYINT DEFAULT 1 COMMENT '文章类型，1：原创；2：转载',
+  author VARCHAR(30) DEFAULT 'throwable' COMMENT '作者',
   INDEX idx_title(title),
   INDEX idx_parent_category_id(parent_category_id),
   INDEX idx_child_category_id(child_category_id),

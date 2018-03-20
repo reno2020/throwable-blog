@@ -17,5 +17,7 @@ data class ArticleDTO(
         var createTime: String? = null,
         var updateTime: String? = null,
         var views: Int? = null,
-        var replies: Int? = null
+        var replies: Int? = null,
+        var articleType: Int? = null,
+        var author: String? = null
 )

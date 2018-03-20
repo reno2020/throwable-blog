@@ -52,8 +52,19 @@ class BlogService {
         val articles = articleDao.queryAllArticles().sortedBy { it.createTime }
         val articlesDTO = ArrayList<ArticleListDTO>(articles.size)
         articles.forEach {
-            articlesDTO.add(ArticleListDTO(LocalDateTimeUtils.format(it.createTime), it.title, it.description, it.id, it.views,
-                    it.parentCategoryId, it.parentCategoryName, it.childCategoryId, it.childCategoryName))
+            articlesDTO.add(ArticleListDTO(
+                    LocalDateTimeUtils.format(it.createTime),
+                    it.title,
+                    it.description,
+                    it.id,
+                    it.views,
+                    it.parentCategoryId,
+                    it.parentCategoryName,
+                    it.childCategoryId,
+                    it.childCategoryName,
+                    it.articleType,
+                    it.author
+            ))
         }
         return articlesDTO
     }
@@ -62,8 +73,19 @@ class BlogService {
         val articles = articleDao.queryArticlesByParentCategoryId(parentCategoryId)
         val articlesDTO = ArrayList<ArticleListDTO>(articles.size)
         articles.forEach {
-            articlesDTO.add(ArticleListDTO(LocalDateTimeUtils.format(it.createTime), it.title, it.description, it.id, it.views,
-                    it.parentCategoryId, it.parentCategoryName, it.childCategoryId, it.childCategoryName))
+            articlesDTO.add(ArticleListDTO(
+                    LocalDateTimeUtils.format(it.createTime),
+                    it.title,
+                    it.description,
+                    it.id,
+                    it.views,
+                    it.parentCategoryId,
+                    it.parentCategoryName,
+                    it.childCategoryId,
+                    it.childCategoryName,
+                    it.articleType,
+                    it.author
+            ))
         }
         return articlesDTO
     }
@@ -72,8 +94,19 @@ class BlogService {
         val articles = articleDao.queryArticlesByChildCategoryId(childCategoryId)
         val articlesDTO = ArrayList<ArticleListDTO>(articles.size)
         articles.forEach {
-            articlesDTO.add(ArticleListDTO(LocalDateTimeUtils.format(it.createTime), it.title, it.description, it.id, it.views,
-                    it.parentCategoryId, it.parentCategoryName, it.childCategoryId, it.childCategoryName))
+            articlesDTO.add(ArticleListDTO(
+                    LocalDateTimeUtils.format(it.createTime),
+                    it.title,
+                    it.description,
+                    it.id,
+                    it.views,
+                    it.parentCategoryId,
+                    it.parentCategoryName,
+                    it.childCategoryId,
+                    it.childCategoryName,
+                    it.articleType,
+                    it.author
+            ))
         }
         return articlesDTO
     }
@@ -95,7 +128,9 @@ class BlogService {
                 description = article.description,
                 replies = article.replies,
                 title = article.title,
-                views = article.views
+                views = article.views,
+                articleType = article.articleType,
+                author = article.author
         )
     }
 
