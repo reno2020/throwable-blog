@@ -91,8 +91,39 @@
             border-bottom: 1px solid #eee;
         }
 
+        .article-description {
+            margin-bottom: 5px;
+            color: #4183c4;
+        }
+
         .breadcrumb {
             margin-bottom: 5px;
+        }
+
+        .article-type-original {
+            background-color: #337ab7;
+            padding: 0.1em 0.6em 0.2em;
+            font-size: 95%;
+            font-weight: bold;
+            line-height: 1;
+            color: #fff;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 1.25em;
+        }
+
+        .article-type-reprint {
+            background-color: #5cb85c;
+            padding: 0.1em 0.6em 0.2em;
+            font-size: 95%;
+            font-weight: bold;
+            line-height: 1;
+            color: #fff;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 1.25em;
         }
     </style>
 </head>
@@ -138,7 +169,8 @@
                     <#if article.parentCategoryId == homeCategoryId>
                      <li><a href="${base}/index">Home</a></li>
                     <#elseif article.parentCategoryId != homeCategoryId>
-                    <li><a href="${base}/parent/category/${article.parentCategoryId}">${article.parentCategoryName}</a></li>
+                    <li><a href="${base}/parent/category/${article.parentCategoryId}">${article.parentCategoryName}</a>
+                    </li>
                     </#if>
                     <!-- 这里要排除首页 -->
                 <#if article.childCategoryId != homeCategoryId>
@@ -149,10 +181,21 @@
                 <div class="article article-header">
                     <header>
                         <h1 class="article article-title">${article.title}</h1>
-                        <p>${article.description}</p>
-                        <p class="article article-metadata">
-                    <span class="article article-metadata-item"><i><object data="${base}/svg/clock.svg"
-                                                                           type="image/svg+xml"></object></i>&nbsp;&nbsp;${article.createTime}</span>
+                        <p class="article-description">${article.description}</p>
+                        <p class="article article-metadata-item">
+                             <#if article.articleType == 1>
+                                             <span class="article-type-original article-metadata-item">原创</span>
+                             <#elseif article.articleType == 2>
+                                             <span class="article-type-reprint article-metadata-item">转载</span>
+                             </#if>
+                            <#if article.articleType == 2 && article.articleUrl != "NULL">
+                            <a href="${article.articleUrl}" target="_blank"><span
+                                    class="label label-info article-metadata-item">阅读原文</span></a>
+                            </#if>
+                            <span class="article article-metadata-item"><i><object data="${base}/svg/person.svg"
+                                                                                   type="image/svg+xml"></object></i>&nbsp;&nbsp;${article.author}</span>
+                            <span class="article article-metadata-item"><i><object data="${base}/svg/clock.svg"
+                                                                                   type="image/svg+xml"></object></i>&nbsp;&nbsp;${article.createTime}</span>
                             <span class="article article-metadata-item"><i><object data="${base}/svg/dashboard.svg"
                                                                                    type="image/svg+xml"></object></i>&nbsp;&nbsp;${article.updateTime}</span>
                             <span class="article article-metadata-item"><i><object data="${base}/svg/eye.svg"
@@ -224,4 +267,9 @@
         });
     });
 </script>
+
+<!-- JiaThis Button BEGIN -->
+<script type="text/javascript" src="http://v3.jiathis.com/code/jiathis_r.js?move=0&amp;btn=r3.gif"
+        charset="utf-8"></script>
+<!-- JiaThis Button END -->
 </body>

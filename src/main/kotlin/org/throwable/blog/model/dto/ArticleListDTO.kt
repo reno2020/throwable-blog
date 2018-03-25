@@ -17,5 +17,6 @@ data class ArticleListDTO(
         var childCategoryId: Long? = null,
         var childCategoryName: String? = null,
         var articleType: Int? = null,
-        var author: String? = null
+        var author: String? = null,
+        var articleUrl: String? = null
 )

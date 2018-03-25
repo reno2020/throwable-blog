@@ -63,7 +63,8 @@ class BlogService {
                     it.childCategoryId,
                     it.childCategoryName,
                     it.articleType,
-                    it.author
+                    it.author,
+                    it.articleUrl
             ))
         }
         return articlesDTO
@@ -84,7 +85,8 @@ class BlogService {
                     it.childCategoryId,
                     it.childCategoryName,
                     it.articleType,
-                    it.author
+                    it.author,
+                    it.articleUrl
             ))
         }
         return articlesDTO
@@ -105,7 +107,8 @@ class BlogService {
                     it.childCategoryId,
                     it.childCategoryName,
                     it.articleType,
-                    it.author
+                    it.author,
+                    it.articleUrl
             ))
         }
         return articlesDTO
@@ -130,7 +133,8 @@ class BlogService {
                 title = article.title,
                 views = article.views,
                 articleType = article.articleType,
-                author = article.author
+                author = article.author,
+                articleUrl = article.articleUrl
         )
     }
 

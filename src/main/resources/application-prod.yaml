@@ -1,0 +1,38 @@
+server:
+  port: 8080
+spring:
+  freemarker:
+    check-template-location: true
+    cache: false
+    request-context-attribute: context
+  application:
+    name: throwable-blog
+  rabbitmq:
+    host: localhost
+    username: root
+    password: root
+mybatis:
+  check-config-location: true
+  config-location: classpath:mybatis/mybatis-configuration.xml
+  mapper-locations: classpath:mybatis/mappings/*.xml
+druid:
+   driver-class-name: com.mysql.jdbc.Driver
+   url: jdbc:mysql://localhost:3306/throwable-blog?useSSL=false
+   username: root
+   password: root
+   # 见DruidDataSource类
+   porperties:
+      validationQuery: SELECT 1
+      testOnBorrow: true
+      testOnReturn: false
+      testWhileIdle: true
+      maxActive: 30
+      initialSize: 10
+      minIdle: 10
+      maxWait: 60000
+      removeAbandoned: true
+      removeAbandonedTimeout: 1800
+      logAbandoned: true
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+

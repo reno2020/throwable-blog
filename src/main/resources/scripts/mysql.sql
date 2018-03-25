@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS `t_article` (
   replies INT DEFAULT 0 COMMENT '回复数量',
   article_type TINYINT DEFAULT 1 COMMENT '文章类型，1：原创；2：转载',
   author VARCHAR(30) DEFAULT 'throwable' COMMENT '作者',
+  article_url VARCHAR(300) DEFAULT 'NULL' COMMENT '文章原始连接',
   INDEX idx_title(title),
   INDEX idx_parent_category_id(parent_category_id),
   INDEX idx_child_category_id(child_category_id),
@@ -55,3 +56,5 @@ CREATE TABLE IF NOT EXISTS `t_link`(
   update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   is_delete TINYINT NOT NULL DEFAULT 0 COMMENT '是否删除'
 )COMMENT '首页链接';
+
+

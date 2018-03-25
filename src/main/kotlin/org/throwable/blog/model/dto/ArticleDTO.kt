@@ -19,5 +19,6 @@ data class ArticleDTO(
         var views: Int? = null,
         var replies: Int? = null,
         var articleType: Int? = null,
-        var author: String? = null
+        var author: String? = null,
+        var articleUrl: String? = null
 )

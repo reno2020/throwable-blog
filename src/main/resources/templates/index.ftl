@@ -124,7 +124,7 @@
                                              <span class="article-type-reprint article-metadata-item">转载</span>
                                          </#if>
 
-                                         <span class="article-metadata-item"><i><object data="${base}/svg/mention.svg"
+                                         <span class="article-metadata-item"><i><object data="${base}/svg/person.svg"
                                                                                         type="image/svg+xml"></object></i>&nbsp;&nbsp;${article.author}</span>
                                          <span class="article-metadata-item"><i><object data="${base}/svg/clock.svg"
                                                                                         type="image/svg+xml"></object></i>&nbsp;&nbsp;${article.createTime}</span>
